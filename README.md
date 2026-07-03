@@ -1,5 +1,8 @@
-# SIRCL
+# SeRCL
 ## A Flexible and Robust Pipeline for NMR Chemometric Feature Selection, Dimension Reduction, and Clustering
+### Se-lection
+### R-eduction
+### CL-ustering
 
 An interactive, web-based pipeline for high-dimensional spectral data exploration, pretreatment, dimension reduction, and unsupervised clustering.
 
