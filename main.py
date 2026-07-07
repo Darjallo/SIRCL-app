@@ -280,15 +280,21 @@ if st.session_state["step_2_ok"]:
         if submit_button_3_2:
             st.session_state["umap_neigh"] = umap_neigh
             st.session_state["umap_min_dist"] = umap_min_dist
+            st.session_state["umap_ncomp"] = ncomp
             st.session_state["step_3_2_ok"] = True
             
-        st.warning("Data is normalised with StandardScaler before applying UMAP")
-        scaled_dimred = scale_umap(st.session_state["df_norm"])
-        umap_paras = [st.session_state["umap_neigh"], st.session_state["umap_min_dist"],
-                 st.session_state["umap_ncomp"], st.session_state["umap_metric"]]
+        
+        
+        
         
         
         if st.session_state["step_3_2_ok"]:
+            st.warning("Data is normalised with StandardScaler before applying UMAP")
+            scaled_dimred = scale_umap(st.session_state["df_norm"])
+            
+            umap_paras = [st.session_state["umap_neigh"], st.session_state["umap_min_dist"],
+                     st.session_state["umap_ncomp"], st.session_state["umap_metric"]]
+            
             fig_umap, df_dimred = plot_umap(scaled_dimred, umap_paras, 
                                   st.session_state["custom_group_colors"],
                                   st.session_state["cluster_label"])
@@ -331,6 +337,7 @@ if st.session_state["step_3_fig_ok"] or st.session_state["step_3_3_ok"]:
             umap_neigh, umap_min_dist, ncomp, submit_button_4 = f.umap_params_form()
         st.session_state["umap_neigh"] = umap_neigh
         st.session_state["umap_min_dist"] = umap_min_dist
+        st.session_state["umap_ncomp"] = ncomp
         scaled_dimred = scale_umap(st.session_state["df_norm"])
         umap_paras = [st.session_state["umap_neigh"], st.session_state["umap_min_dist"],
                  st.session_state["umap_ncomp"], st.session_state["umap_metric"]]
