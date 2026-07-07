@@ -132,6 +132,8 @@ def first_processing(df_data, dataprep1):
         
     if dataprep1 == "SPIMP":
         return ct.splmp(df_data)
+    else:
+        return df_data
 
 
 @st.cache_data
