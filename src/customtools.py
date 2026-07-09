@@ -213,13 +213,29 @@ def group_naming(groups):
     return unique_groups
 
 def clustering(vals, groups, l):
+    
+    # Force strict conversions to pure Python scalar primitives
+    min_cluster_size_scalar = int(st.session_state.get("hdbscan_min_cluster_size", 5))
+    min_samples_scalar = int(st.session_state.get("hdbscan_min_samples", 5))
+    
+    # If using cluster_selection_epsilon, ensure it is a plain float, NOT a numpy type
+    epsilon_scalar = float(st.session_state.get("hdbscan_cluster_selection_epsilon", 0.5))
+    
+    # Pass these clean primitives to the instance builder
+    hdb = HDBSCAN(
+        min_cluster_size=min_cluster_size_scalar,
+        min_samples=min_samples_scalar,
+        cluster_selection_epsilon=epsilon_scalar,
+        cluster_selection_method=str(st.session_state.get("hdbscan_cluster_selection_method", "eom")),
+        allow_single_cluster=bool(st.session_state.get("hdbscan_allow_single_cluster", False))
+    ).fit(vals)
 
-    hdb = HDBSCAN(cluster_selection_epsilon=st.session_state["hdbscan_cluster_selection_epsilon"], 
-                  min_cluster_size = st.session_state["hdbscan_min_cluster_size"],
-                  min_samples=st.session_state["hdbscan_min_samples"],
-                  cluster_selection_method=st.session_state["hdbscan_cluster_selection_method"],
-                  allow_single_cluster=st.session_state["hdbscan_allow_single_cluster"]
-                  ).fit(vals) 
+    # hdb = HDBSCAN(cluster_selection_epsilon=st.session_state["hdbscan_cluster_selection_epsilon"], 
+    #               min_cluster_size = st.session_state["hdbscan_min_cluster_size"],
+    #               min_samples=st.session_state["hdbscan_min_samples"],
+    #               cluster_selection_method=st.session_state["hdbscan_cluster_selection_method"],
+    #               allow_single_cluster=st.session_state["hdbscan_allow_single_cluster"]
+    #               ).fit(vals) 
     labels = hdb.labels_ 
     #st.write(labels)
     st.session_state["class_categories"] = labels
