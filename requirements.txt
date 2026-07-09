@@ -4,4 +4,4 @@ plotly
 streamlit
 scikit-learn
 umap-learn
-kaleido
+kaleido==0.2.1

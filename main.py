@@ -130,7 +130,7 @@ def first_processing(df_data, dataprep1):
     Feature Selection (spimp)
     """   
         
-    if dataprep1 == "SPIMP":
+    if dataprep1 == "SpImp":
         return ct.splmp(df_data)
     else:
         return df_data
@@ -220,7 +220,7 @@ if len(st.session_state['df_raw'])>0:
     
 if st.session_state["step_1_ok"]:
     st.divider()
-    st.subheader('Optional step: use treshold for features')
+    st.subheader('Optional step: use threshold for features')
     col_tresh1, col_tresh2=st.columns(2)
     
     with col_tresh1:
@@ -253,16 +253,21 @@ if st.session_state["step_1_ok"]:
             if st.session_state["df_norm"] is None or (isinstance(st.session_state["df_norm"], pd.DataFrame) and st.session_state["df_norm"].empty):
                 # If it dropped, re-compute it safely out of the button context
                 st.session_state["df_norm"] = first_processing(st.session_state['df_vals'], dataprep1)
+            
+     
 
             if len(st.session_state["df_norm"]) > 0:
-                st.subheader(':blue[Data after SPIMP processing:]')
+                if dataprep1=="SpImp":
+                    st.subheader(':blue[Data after SpImp processing:]')
+                else:
+                    st.subheader(':blue[Data after no processing:]')
                 st.dataframe(st.session_state["df_norm"])
                 
             
                 # Visualization
                 if dataprep1 == "Other?":
                     ct.display_other_plot()
-                elif dataprep1 == "SPIMP":
+                elif dataprep1 == "SpImp":
                     fig_splmp = v.splmp_plot(st.session_state['df_vals'], st.session_state["df_norm"], sample_idx)   
                     st.plotly_chart(fig_splmp)
                 else:

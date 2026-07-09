@@ -70,7 +70,7 @@ def data_metadata_labels(df):
 # 1.3 treshold for features
 def treshold_form():
     with st.form("set feature treshold"):
-        percent = st.slider("% of featre value considered as noize", 
+        percent = st.slider("% of feature value considered as noize", 
                            min_value=0, max_value=100, value=0)
         submit_button = st.form_submit_button("Submit")
     return percent, submit_button
@@ -82,7 +82,7 @@ def data_norm_form(max_val):
     
         # Select data normalisation algorithm
         dataprep1 = st.selectbox("Select an action", 
-                                 ["None", "SPIMP", "Other?"], 
+                                 ["None", "SpImp", "Other?"], 
                                  index=None, # no option is selected initially
                                  )
        # max_val = len(df)
@@ -135,7 +135,7 @@ def umap_params_form():
                                 High values: tend to prevent clusters from forming, preserving the broad topological structure.")
         # controls how tightly UMAP is allowed to pack points together
         
-        ncomp = st.number_input("Number of components (dimentions)", 
+        ncomp = st.number_input("Number of components (dimensions)", 
                               min_value=1, value=2)
         # dimensionality of the reduced dimension space 
         
